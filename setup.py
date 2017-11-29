@@ -43,7 +43,7 @@ version = read_version(
 
 setup(
     name='sqliteshell',
-    url='https://github.com/jlee_made/sqliteshell',
+    url='https://github.com/jlee-made/sqliteshell',
     author='John Lee',
     classifiers=classifiers,
     description=(
