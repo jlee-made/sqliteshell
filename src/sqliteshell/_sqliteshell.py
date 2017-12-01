@@ -2,6 +2,20 @@ import contextlib
 import sqlite3
 import textwrap
 
+try:
+    import prettytable
+except ImportError:
+    def print_table(labels, row_iter):
+        print(labels)
+        for row in row_iter:
+            print(row)
+else:
+    def print_table(labels, row_iter):
+        x = prettytable.PrettyTable(labels)
+        for row in row_iter:
+            x.add_row(row)
+        print(x)
+
 
 def shell(conn):
     """Drop into a just-about-tolerable sqlite shell.
@@ -93,8 +107,8 @@ def shell(conn):
                         cur.execute(buffer)
 
                         if buffer.lstrip().upper().startswith("SELECT"):
-                            for row in cur.fetchall():
-                                print(row)
+                            names = [col[0] for col in cur.description]
+                            print_table(names, cur.fetchall())
                     except sqlite3.Error as e:
                         print("An error occurred:", e.args[0])
                     buffer = ""
