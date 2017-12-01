@@ -93,7 +93,8 @@ def shell(conn):
                         cur.execute(buffer)
 
                         if buffer.lstrip().upper().startswith("SELECT"):
-                            print(cur.fetchall())
+                            for row in cur.fetchall():
+                                print(row)
                     except sqlite3.Error as e:
                         print("An error occurred:", e.args[0])
                     buffer = ""
